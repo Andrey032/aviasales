@@ -1,0 +1,18 @@
+%text_extend {
+  max-width: 141px;
+  width: 100%;
+  text-align: start;
+  font-weight: $semiBold;
+}
+
+%button_extend {
+  width: 100%;
+  max-height: 50px;
+  height: 100%;
+  font-weight: $semiBold;
+  font-size: $font-XS;
+  line-height: $lineHeight-M;
+  letter-spacing: $letterSpacingVerySmall;
+  color: $colorText;
+  cursor: url(/assets/cursor.svg), auto;
+}

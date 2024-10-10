@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+.logo {
+  width: 60px;
+  display: block;
+  margin: 0 auto;
+  object-fit: none;
+  border-radius: 50%;
+  grid-area: logo;
+
+  &__contaier {
+    padding: 50px 0;
+  }
+}

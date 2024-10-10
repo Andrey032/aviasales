@@ -1,0 +1,12 @@
+.main {
+  max-width: 756px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(200px, 232px) 1fr;
+  column-gap: 20px;
+  grid-template-areas:
+    'logo logo'
+    'filter ticket'
+    'filter card'
+    '. button';
+}

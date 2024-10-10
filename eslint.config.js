@@ -30,7 +30,7 @@ export default tseslint.config(
         ...globals.es2020,
       },
       parserOptions: {
-        project: ['tsconfig.json', 'tsconfig.node.json'],
+        project: ['tsconfig.json'],
       },
     },
     rules: {
