@@ -9,6 +9,22 @@
   height: 50px;
   transition: opacity 0.5s;
 
+  &__leftRadius {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  &__rightRadius {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  &__buttonMore {
+    border-radius: 5px;
+    background-color: #2196f3;
+    color: #ffffff;
+  }
+
   &:focus {
     background-color: #2196f3;
     color: $backgroundWindow;
