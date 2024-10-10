@@ -22,3 +22,10 @@
     flex-direction: column;
   }
 }
+@media screen and (max-width: 640px) {
+  .filter {
+    max-width: 504px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

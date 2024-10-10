@@ -7,10 +7,14 @@
   border: 1px solid $borderColor;
   grid-area: button;
   height: 50px;
-  // background-color: $highlightedСolor;
+  transition: opacity 0.5s;
 
   &:focus {
     background-color: #2196f3;
     color: $backgroundWindow;
+  }
+
+  &:hover {
+    opacity: 0.7;
   }
 }

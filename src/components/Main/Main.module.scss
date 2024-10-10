@@ -10,3 +10,15 @@
     'filter card'
     '. button';
 }
+@media screen and (max-width: 640px) {
+  .main {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-template-areas:
+      'logo'
+      'filter'
+      'ticket'
+      'card'
+      'button';
+  }
+}
