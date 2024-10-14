@@ -1,7 +1,7 @@
 import styleButton from './Button.module.scss';
 import classnames from 'classnames';
 
-const Button = ({ text = '', tab = '' }) => {
+const Button = ({ text = '', tab = '', handleClick = () => {} }) => {
   const {
     button,
     button__leftRadius: leftRadius,
@@ -15,6 +15,14 @@ const Button = ({ text = '', tab = '' }) => {
     tab === 'tab3' && rightRadius,
     tab === 'more' && buttonMore
   );
-  return <button className={borderButton}>{text}</button>;
+
+  return (
+    <button
+      className={borderButton}
+      onClick={handleClick}
+    >
+      {text}
+    </button>
+  );
 };
 export { Button };

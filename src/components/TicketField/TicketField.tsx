@@ -11,6 +11,8 @@ const TicketField = () => {
       <Ticket />
       <Ticket />
       <Ticket />
+      <Ticket />
+      <Ticket />
     </div>
   );
 };

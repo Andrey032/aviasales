@@ -38,6 +38,7 @@ export default tseslint.config(
       ...eslintConfigPrettier.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       ...reactHooks.configs.recommended.rules,
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
   {
