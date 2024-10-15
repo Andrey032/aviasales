@@ -16,4 +16,4 @@ const TicketField = () => {
     </div>
   );
 };
-export { TicketField };
+export default TicketField;

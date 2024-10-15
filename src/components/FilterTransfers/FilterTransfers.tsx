@@ -49,4 +49,4 @@ const FilterTransfers = () => {
     </div>
   );
 };
-export { FilterTransfers };
+export default FilterTransfers;

@@ -18,4 +18,4 @@ const Input = ({ label, func, state }) => {
     </label>
   );
 };
-export { Input };
+export default Input;

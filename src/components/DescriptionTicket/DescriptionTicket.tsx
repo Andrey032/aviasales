@@ -20,4 +20,4 @@ const DescriptionTicket = () => {
     </table>
   );
 };
-export { DescriptionTicket };
+export default DescriptionTicket;

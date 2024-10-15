@@ -1,2 +1,2 @@
-import { TicketField } from './TicketField';
+import TicketField from './TicketField';
 export default TicketField;

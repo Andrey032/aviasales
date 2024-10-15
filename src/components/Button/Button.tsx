@@ -25,4 +25,4 @@ const Button = ({ text = '', tab = '', handleClick = () => {} }) => {
     </button>
   );
 };
-export { Button };
+export default Button;

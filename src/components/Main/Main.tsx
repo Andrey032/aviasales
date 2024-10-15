@@ -15,4 +15,4 @@ const Main = () => {
     </section>
   );
 };
-export { Main };
+export default Main;

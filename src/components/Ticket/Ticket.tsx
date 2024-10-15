@@ -17,4 +17,4 @@ const Ticket = () => {
     </article>
   );
 };
-export { Ticket };
+export default Ticket;

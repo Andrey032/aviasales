@@ -36,4 +36,4 @@ const Tabs = () => {
     </div>
   );
 };
-export { Tabs };
+export default Tabs;

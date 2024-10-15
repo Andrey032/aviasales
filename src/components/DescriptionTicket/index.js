@@ -1,2 +1,2 @@
-import { DescriptionTicket } from './DescriptionTicket';
+import DescriptionTicket from './DescriptionTicket';
 export default DescriptionTicket;
