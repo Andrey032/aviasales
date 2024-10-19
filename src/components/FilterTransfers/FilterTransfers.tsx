@@ -6,7 +6,7 @@ import {
   oneTransfersAction,
   twoTransfersAction,
   threeTransfersAction,
-} from '../../redux/actions/actionsCheckBox';
+} from '../../redux/checkBox/actionsCheckBox';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FilterTransfers = () => {

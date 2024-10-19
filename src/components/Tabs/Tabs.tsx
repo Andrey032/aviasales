@@ -1,6 +1,6 @@
 import Button from '../Button/index';
 import styleTabs from './Tabs.module.scss';
-import { cheap, fast, optimal } from '../../redux/actions/actionsTab';
+import { cheap, fast, optimal } from '../../redux/tab/actionsTab';
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
 

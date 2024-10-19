@@ -11,7 +11,7 @@ export default tseslint.config(
   {
     plugins: {
       '@typescript-eslint': tseslint.plugin,
-      react: eslintReact,
+      react: eslintReact.configs.flat.recommended,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       prettier: eslintPluginPrettier,
