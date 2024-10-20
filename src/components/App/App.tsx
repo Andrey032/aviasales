@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     console.log('effect');
     const searchId = localStorage.getItem('searchId');
-    if (!searchId) {
+    if (searchId === null) {
       console.log('searchId');
       getSearchId().then((id) => localStorage.setItem('searchId', id));
     }
@@ -24,7 +24,7 @@ function App() {
       console.log('tickets');
       dispatch(getTickets(searchId));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styleApp.app}>
