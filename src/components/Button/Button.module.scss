@@ -1,10 +1,10 @@
-@import '../../styles/variables';
-@import '../../styles/extends';
+@use '../../styles/variables' as variables;
+@use '../../styles/extends' as extends;
 
 .button {
   @extend %button_extend;
-  background-color: $backgroundWindow;
-  border: 1px solid $borderColor;
+  background-color: variables.$backgroundWindow;
+  border: 1px solid variables.$borderColor;
   grid-area: button;
   height: 50px;
   transition: opacity 0.5s;
@@ -27,7 +27,7 @@
 
   &:focus {
     background-color: #2196f3;
-    color: $backgroundWindow;
+    color: variables.$backgroundWindow;
   }
 
   &:hover {

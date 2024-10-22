@@ -1,8 +1,5 @@
-import {
-  FETCH_TICKETS_REQUEST,
-  FETCH_TICKETS_SUCCESS,
-  FETCH_TICKETS_FAILURE,
-} from '../../utils/constants';
+import { failureTickets, requestTicket, successTickets } from './ticketsActions';
+import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
   isFetching: false,
@@ -11,33 +8,25 @@ const initialState = {
   error: {},
 };
 
-const reducerTickets = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_TICKETS_REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-        isError: false,
-        error: {},
+const reducerTickets = createReducer(initialState, (builder) => {
+  builder
+    .addCase(requestTicket, (state) => {
+      state.isFetching = true;
+      state.isError = false;
+      state.error = {};
+    })
+    .addCase(successTickets, (state, actions) => {
+      state.isFetching = false;
+      state.items = actions.payload;
+    })
+    .addCase(failureTickets, (state, actions) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.error = {
+        name: actions.payload.name,
+        message: actions.payload.message,
       };
-    case FETCH_TICKETS_SUCCESS:
-      return {
-        ...state,
-        items: action.payload,
-        isFetching: false,
-      };
-    case FETCH_TICKETS_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        isError: true,
-        error: {
-          name: action.payload.name,
-          message: action.payload.message,
-        },
-      };
-    default:
-      return state;
-  }
-};
+    });
+});
+
 export default reducerTickets;

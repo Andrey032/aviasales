@@ -27,22 +27,22 @@ const FilterTransfers = () => {
         />
         <Input
           label='Без пересадок'
-          func={() => dispatch(noTransfersAction)}
+          func={() => dispatch(noTransfersAction())}
           state={noTransfers}
         />
         <Input
           label='1 пересадка'
-          func={() => dispatch(oneTransfersAction)}
+          func={() => dispatch(oneTransfersAction())}
           state={oneTransfers}
         />
         <Input
           label='2 пересадки'
-          func={() => dispatch(twoTransfersAction)}
+          func={() => dispatch(twoTransfersAction())}
           state={twoTransfers}
         />
         <Input
           label='3 пересадки'
-          func={() => dispatch(threeTransfersAction)}
+          func={() => dispatch(threeTransfersAction())}
           state={threeTransfers}
         />
       </div>

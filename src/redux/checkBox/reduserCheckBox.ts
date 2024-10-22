@@ -1,10 +1,12 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 import {
-  ALL,
-  NO_TRANSFERS,
-  ONE_TRANSFER,
-  TWO_TRANSFERS,
-  THREE_TRANSFERS,
-} from '../../utils/constants';
+  allAction,
+  noTransfersAction,
+  oneTransfersAction,
+  twoTransfersAction,
+  threeTransfersAction,
+} from './actionsCheckBox';
 
 const checkBoxState = {
   all: false,
@@ -18,55 +20,28 @@ const updateAllState = (state) => {
   return state.oneTransfers && state.twoTransfers && state.threeTransfers;
 };
 
-const reduserCheckBox = (state = checkBoxState, action) => {
-  switch (action.type) {
-    case ALL:
-      return {
-        all: action.payload,
-        noTransfers: action.payload,
-        oneTransfers: action.payload,
-        twoTransfers: action.payload,
-        threeTransfers: action.payload,
-      };
+const reduserCheckBox = createReducer(checkBoxState, (builder) => {
+  builder
+    .addCase(allAction, (state, action) => {
+      Object.keys(state).map((key) => {
+        state[key] = action.payload;
+      });
+    })
+    .addCase(noTransfersAction, (state) => {
+      state.noTransfers = !state.noTransfers;
+    })
+    .addCase(oneTransfersAction, (state) => {
+      state.oneTransfers = !state.oneTransfers;
+      state.all = updateAllState({ ...state });
+    })
+    .addCase(twoTransfersAction, (state) => {
+      state.twoTransfers = !state.twoTransfers;
+      state.all = updateAllState({ ...state });
+    })
+    .addCase(threeTransfersAction, (state) => {
+      state.threeTransfers = !state.threeTransfers;
+      state.all = updateAllState({ ...state });
+    });
+});
 
-    case NO_TRANSFERS:
-      return {
-        ...state,
-        noTransfers: !state.noTransfers,
-      };
-
-    case ONE_TRANSFER:
-      return {
-        ...state,
-        oneTransfers: !state.oneTransfers,
-        all: updateAllState({
-          ...state,
-          oneTransfers: !state.oneTransfers,
-        }),
-      };
-
-    case TWO_TRANSFERS:
-      return {
-        ...state,
-        twoTransfers: !state.twoTransfers,
-        all: updateAllState({
-          ...state,
-          twoTransfers: !state.twoTransfers,
-        }),
-      };
-
-    case THREE_TRANSFERS:
-      return {
-        ...state,
-        threeTransfers: !state.threeTransfers,
-        all: updateAllState({
-          ...state,
-          threeTransfers: !state.threeTransfers,
-        }),
-      };
-
-    default:
-      return state;
-  }
-};
 export default reduserCheckBox;

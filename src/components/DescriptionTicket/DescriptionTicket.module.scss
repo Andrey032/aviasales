@@ -1,5 +1,5 @@
-@import '../../styles/variables';
-@import '../../styles/extends';
+@use '../../styles/variables' as variables;
+@use '../../styles/extends' as extends;
 
 .description {
   table-layout: fixed;
@@ -17,17 +17,17 @@
 
   &__info {
     @extend %text_extend;
-    color: $greyColor;
-    font-size: $font-XS;
-    line-height: $lineHeight-S;
+    color: variables.$greyColor;
+    font-size: variables.$font-XS;
+    line-height: variables.$lineHeight-S;
     padding: 0;
   }
 
   &__text {
     @extend %text_extend;
-    color: $colorText;
-    font-size: $font-M;
-    line-height: $lineHeight-XS;
+    color: variables.$colorText;
+    font-size: variables.$font-M;
+    line-height: variables.$lineHeight-XS;
     padding: 0;
   }
 }

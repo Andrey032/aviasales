@@ -1,20 +1,20 @@
-@import '../../styles/variables';
+@use '../../styles/variables' as variables;
 .filter {
   max-width: 232px;
   max-height: 252px;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.1);
   border-radius: 5px;
-  background-color: $backgroundWindow;
+  background-color: variables.$backgroundWindow;
   grid-area: filter;
 
   &__title {
     margin: 0;
     padding: 20px 20px 10px;
-    color: $colorText;
-    font-size: $font-XS;
-    font-weight: $semiBold;
-    line-height: $lineHeight-XXS;
-    letter-spacing: $letterSpacingVerySmall;
+    color: variables.$colorText;
+    font-size: variables.$font-XS;
+    font-weight: variables.$semiBold;
+    line-height: variables.$lineHeight-XXS;
+    letter-spacing: variables.$letterSpacingVerySmall;
   }
 
   &__wrapper {

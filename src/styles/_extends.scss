@@ -1,18 +1,20 @@
+@use './variables' as variables;
+
 %text_extend {
   max-width: 141px;
   width: 100%;
   text-align: start;
-  font-weight: $semiBold;
+  font-weight: variables.$semiBold;
 }
 
 %button_extend {
   width: 100%;
   max-height: 50px;
   height: 100%;
-  font-weight: $semiBold;
-  font-size: $font-XS;
-  line-height: $lineHeight-M;
-  letter-spacing: $letterSpacingVerySmall;
-  color: $colorText;
+  font-weight: variables.$semiBold;
+  font-size: variables.$font-XS;
+  line-height: variables.$lineHeight-M;
+  letter-spacing: variables.$letterSpacingVerySmall;
+  color: variables.$colorText;
   cursor: url(/assets/cursor.svg), auto;
 }

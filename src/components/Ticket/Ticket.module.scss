@@ -1,12 +1,11 @@
-@import '../../styles/_variables';
-@import '../../styles/extends';
+@use '../../styles/_variables' as variables;
 
 .ticket {
   max-width: 504px;
   width: 100%;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.1);
   margin-bottom: 20px;
-  background-color: $backgroundWindow;
+  background-color: variables.$backgroundWindow;
   border-radius: 5px;
 
   &__header {
@@ -17,10 +16,10 @@
 
   &__price {
     margin: 0;
-    color: $highlightedСolor;
-    font-weight: $semiBold;
-    font-size: $font-L;
+    color: variables.$highlightedСolor;
+    font-weight: variables.$semiBold;
+    font-size: variables.$font-L;
     letter-spacing: 0.4px;
-    line-height: $lineHeight-L;
+    line-height: variables.$lineHeight-L;
   }
 }

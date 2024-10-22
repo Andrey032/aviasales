@@ -1,16 +1,22 @@
-import { CHEAPEST, THE_FASTEST, OPTIMAL } from '../../utils/constants';
+import { cheap, fast, optimal } from './actionsTab';
+import { createReducer } from '@reduxjs/toolkit';
 
-const reduserTab = (state = '', action) => {
-  switch (action.type) {
-    case CHEAPEST:
-      return 'ДЕШЕВЫЙ';
-    case THE_FASTEST:
-      return 'БЫСТРЫЙ';
-    case OPTIMAL:
-      return 'ОПТИМАЛ';
+const initialState = '';
 
-    default:
+const reduserTab = createReducer(initialState, (builder) => {
+  builder
+    .addCase(cheap, (state, action) => {
+      state = action.type;
       return state;
-  }
-};
+    })
+    .addCase(fast, (state, action) => {
+      state = action.type;
+      return state;
+    })
+    .addCase(optimal, (state, action) => {
+      state = action.type;
+      return state;
+    });
+});
+
 export default reduserTab;
