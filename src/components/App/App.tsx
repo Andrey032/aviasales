@@ -1,27 +1,25 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 import Logo from '../Logo/index';
 import Main from '../Main/index';
 
 import { getSearchId, getTickets } from '../../services/fetchServices';
+import { isError, errorMessage } from '../../redux/tickets/ticketsSlice';
 
 import styleApp from './App.module.scss';
 
 function App() {
-  const dispatch = useDispatch();
-  const errorVisible = useSelector((state) => state.tickets.isError);
-  const errorMassege = useSelector((state) => state.tickets.error.message);
+  const dispatch = useAppDispatch();
+  const errorVisible = useAppSelector(isError);
+  const errorMassege = useAppSelector(errorMessage);
 
   useEffect(() => {
-    console.log('effect');
     const searchId = localStorage.getItem('searchId');
     if (searchId === null) {
-      console.log('searchId');
       getSearchId().then((id) => localStorage.setItem('searchId', id));
     }
     if (searchId) {
-      console.log('tickets');
       dispatch(getTickets(searchId));
     }
   }, [dispatch]);

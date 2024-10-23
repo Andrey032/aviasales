@@ -1,4 +1,4 @@
-import { failureTickets, requestTicket, successTickets } from '../redux/tickets/ticketsActions';
+import { failureTickets, requestTicket, successTickets } from '../redux/tickets/ticketsSlice';
 import { URL } from '../utils/constants';
 
 // получаем searchId

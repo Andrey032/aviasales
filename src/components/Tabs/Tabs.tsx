@@ -1,37 +1,27 @@
 import Button from '../Button/index';
 import styleTabs from './Tabs.module.scss';
-import { cheap, fast, optimal } from '../../redux/tab/actionsTab';
-import { bindActionCreators } from 'redux';
-import { useDispatch } from 'react-redux';
+import { cheap, fast, optimal } from '../../redux/tab/tabsSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const Tabs = () => {
-  const dispatch = useDispatch();
-
-  const { cheapDespatch, fastDespatch, optimalDespatch } = bindActionCreators(
-    {
-      cheapDespatch: cheap,
-      fastDespatch: fast,
-      optimalDespatch: optimal,
-    },
-    dispatch
-  );
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styleTabs.tabs}>
       <Button
         text='САМЫЙ ДЕШЕВЫЙ'
         tab='tab1'
-        handleClick={cheapDespatch}
+        handleClick={() => dispatch(cheap('САМЫЙ ДЕШЕВЫЙ'))}
       />
       <Button
         text='САМЫЙ БЫСТРЫЙ'
         tab='tab2'
-        handleClick={fastDespatch}
+        handleClick={() => dispatch(fast('САМЫЙ БЫСТРЫЙ'))}
       />
       <Button
         text='ОПТИМАЛЬНЫЙ'
         tab='tab3'
-        handleClick={optimalDespatch}
+        handleClick={() => dispatch(optimal('ОПТИМАЛЬНЫЙ'))}
       />
     </div>
   );

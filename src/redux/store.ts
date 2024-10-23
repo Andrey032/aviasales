@@ -1,15 +1,11 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import rootRedusers from './rootRedusers';
-// import { loadState, saveState } from '../utils/local-storage';
-import { thunk } from 'redux-thunk';
-// const persistedState = loadState();
 
-const store = createStore(
-  rootRedusers,
-  // persistedState,
-  applyMiddleware(thunk)
-);
-
-// store.subscribe(() => saveState(store.getState()));
+const store = configureStore({
+  reducer: rootRedusers,
+  devTools: true,
+});
 
 export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

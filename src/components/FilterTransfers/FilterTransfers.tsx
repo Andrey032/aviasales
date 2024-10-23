@@ -6,12 +6,14 @@ import {
   oneTransfersAction,
   twoTransfersAction,
   threeTransfersAction,
-} from '../../redux/checkBox/actionsCheckBox';
-import { useDispatch, useSelector } from 'react-redux';
+  selectCheckBox,
+} from '../../redux/checkBox/checkBoxsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const FilterTransfers = () => {
-  const dispatch = useDispatch();
-  const checkBoxState = useSelector((state) => state.checkBox);
+  const dispatch = useAppDispatch();
+  const checkBoxState = useAppSelector(selectCheckBox);
+
   const { all, noTransfers, oneTransfers, twoTransfers, threeTransfers } = checkBoxState;
 
   const isAllChecked = () => !checkBoxState.all;

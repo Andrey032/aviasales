@@ -1,12 +1,12 @@
 import Tabs from '../Tabs/index';
 import Ticket from '../Ticket/index';
 import styleTicketField from './TicketField.module.scss';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 
 let ticketId = 1;
 
 const TicketField = () => {
-  const tickets = useSelector((state) => state.tickets.items);
+  const tickets = useAppSelector((state) => state.tickets.items);
 
   return (
     <div className={styleTicketField.ticketField}>
