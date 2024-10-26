@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Logo from '../Logo/index';
 import Main from '../Main/index';
 
-import { getSearchId, getTickets } from '../../services/fetchServices';
-import { isError, errorMessage } from '../../redux/tickets/ticketsSlice';
+import { getSearchId } from '../../services/fetchServices';
+import { isError, errorMessage, loadAllTickets } from '../../features/tickets/ticketsSlice';
 
 import styleApp from './App.module.scss';
 
@@ -18,9 +18,8 @@ function App() {
     const searchId = localStorage.getItem('searchId');
     if (searchId === null) {
       getSearchId().then((id) => localStorage.setItem('searchId', id));
-    }
-    if (searchId) {
-      dispatch(getTickets(searchId));
+    } else {
+      dispatch(loadAllTickets(searchId));
     }
   }, [dispatch]);
 

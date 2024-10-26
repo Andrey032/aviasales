@@ -1,4 +1,3 @@
-import { failureTickets, requestTicket, successTickets } from '../redux/tickets/ticketsSlice';
 import { URL } from '../utils/constants';
 
 // получаем searchId
@@ -9,13 +8,13 @@ export const getSearchId = async () => {
 };
 
 // thunk получаем билеты
-export const getTickets = (searchId) => (dispatch) => {
-  dispatch(requestTicket());
-  fetch(`${URL}tickets?searchId=${searchId}`)
-    .then((response) => {
-      if (!response.ok) throw new Error('Ошибка сервера');
-      return response.json();
-    })
-    .then(({ tickets }) => dispatch(successTickets(tickets)))
-    .catch((err) => dispatch(failureTickets(err)));
-};
+// export const getTickets = (searchId) => (dispatch) => {
+//   dispatch(requestTicket());
+//   fetch(`${URL}tickets?searchId=${searchId}`)
+//     .then((response) => {
+//       if (!response.ok) throw new Error('Ошибка сервера');
+//       return response.json();
+//     })
+//     .then(({ tickets }) => dispatch(successTickets(tickets)))
+//     .catch((err) => dispatch(failureTickets(err)));
+// };

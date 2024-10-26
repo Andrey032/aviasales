@@ -1,6 +1,6 @@
 import Button from '../Button/index';
 import styleTabs from './Tabs.module.scss';
-import { cheap, fast, optimal } from '../../redux/tab/tabsSlice';
+import { cheap, fast, optimal } from '../../features/tab/tabsSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 
 const Tabs = () => {

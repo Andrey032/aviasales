@@ -7,7 +7,7 @@ import {
   twoTransfersAction,
   threeTransfersAction,
   selectCheckBox,
-} from '../../redux/checkBox/checkBoxsSlice';
+} from '../../features/checkBox/checkBoxsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const FilterTransfers = () => {
