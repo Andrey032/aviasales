@@ -10,7 +10,7 @@ import {
 } from '../../features/checkBox/checkBoxsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
-const FilterTransfers = () => {
+const FilterTransfers: React.FC = () => {
   const dispatch = useAppDispatch();
   const checkBoxState = useAppSelector(selectCheckBox);
 

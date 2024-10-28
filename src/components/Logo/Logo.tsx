@@ -1,6 +1,6 @@
 import styleLogo from './Logo.module.scss';
 import logoSvg from '/assets/logo.svg';
-const Logo = () => {
+const Logo: React.FC = () => {
   return (
     <div className={styleLogo.logo__contaier}>
       <img

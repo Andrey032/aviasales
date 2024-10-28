@@ -1,7 +1,13 @@
 import styleButton from './Button.module.scss';
 import classnames from 'classnames';
 
-const Button = ({ text = '', tab = '', handleClick = () => {} }) => {
+interface ButtonProps {
+  text: string;
+  tab: string;
+  click: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ text, tab, click }) => {
   const {
     button,
     button__leftRadius: leftRadius,
@@ -19,7 +25,7 @@ const Button = ({ text = '', tab = '', handleClick = () => {} }) => {
   return (
     <button
       className={borderButton}
-      onClick={handleClick}
+      onClick={click}
     >
       {text}
     </button>

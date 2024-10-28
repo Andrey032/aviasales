@@ -1,10 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: string = '';
 
 const tabSlice = createSlice({
-  name: 'tabs',
+  name: '@@tabs',
   initialState,
   reducers: {
     cheap: (state, action: PayloadAction<string>) => {

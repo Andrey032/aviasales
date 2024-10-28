@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import Spiner from '../Spiner/index';
 import Button from '../Button';
 
-const Main = () => {
+const Main: React.FC = () => {
   const isFetching = useAppSelector((state) => state.tickets.isFetching);
 
   return (
@@ -18,6 +18,7 @@ const Main = () => {
           <Button
             text={'ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!'}
             tab={'more'}
+            click={() => console.log('click')}
           />
         </section>
       )}

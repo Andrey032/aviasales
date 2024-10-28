@@ -9,7 +9,7 @@ import { isError, errorMessage, loadAllTickets } from '../../features/tickets/ti
 
 import styleApp from './App.module.scss';
 
-function App() {
+const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const errorVisible = useAppSelector(isError);
   const errorMassege = useAppSelector(errorMessage);
@@ -30,5 +30,5 @@ function App() {
       {!errorVisible && <Main />}
     </div>
   );
-}
+};
 export default App;

@@ -3,7 +3,7 @@ import styleTabs from './Tabs.module.scss';
 import { cheap, fast, optimal } from '../../features/tab/tabsSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 
-const Tabs = () => {
+const Tabs: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -11,17 +11,17 @@ const Tabs = () => {
       <Button
         text='САМЫЙ ДЕШЕВЫЙ'
         tab='tab1'
-        handleClick={() => dispatch(cheap('САМЫЙ ДЕШЕВЫЙ'))}
+        click={() => dispatch(cheap('САМЫЙ ДЕШЕВЫЙ'))}
       />
       <Button
         text='САМЫЙ БЫСТРЫЙ'
         tab='tab2'
-        handleClick={() => dispatch(fast('САМЫЙ БЫСТРЫЙ'))}
+        click={() => dispatch(fast('САМЫЙ БЫСТРЫЙ'))}
       />
       <Button
         text='ОПТИМАЛЬНЫЙ'
         tab='tab3'
-        handleClick={() => dispatch(optimal('ОПТИМАЛЬНЫЙ'))}
+        click={() => dispatch(optimal('ОПТИМАЛЬНЫЙ'))}
       />
     </div>
   );

@@ -1,8 +1,14 @@
 import styleInput from './input.module.scss';
 
-const Input = ({ label, func, state }) => {
-  const handleChangeInput = (event) => {
-    func(event.target.check);
+interface InputProps {
+  label: string;
+  func: (str: boolean) => void;
+  state: boolean;
+}
+
+const Input: React.FC<InputProps> = ({ label, func, state }) => {
+  const handleChangeInput = (event: { target: { checked: boolean } }) => {
+    func(event.target.checked);
   };
 
   return (

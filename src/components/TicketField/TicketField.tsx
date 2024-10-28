@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/hooks';
 
 let ticketId = 1;
 
-const TicketField = () => {
+const TicketField: React.FC = () => {
   const tickets = useAppSelector((state) => state.tickets.items);
 
   return (
@@ -14,7 +14,7 @@ const TicketField = () => {
       {tickets.map((ticket) => (
         <Ticket
           key={ticketId++}
-          ticket={ticket}
+          {...ticket}
         />
       ))}
     </div>

@@ -1,11 +1,10 @@
 import styleTicket from './Ticket.module.scss';
 import DescriptionTicket from '../DescriptionTicket/index';
+import { OneTicket } from '../../features/tickets/ticketsSlice';
 
 let descriptionTicketId = 1;
 
-const Ticket = ({ ticket }) => {
-  const { carrier, price, segments } = ticket;
-
+const Ticket: React.FC<OneTicket> = ({ carrier, price, segments }) => {
   return (
     <article className={styleTicket.ticket}>
       <div className={styleTicket.ticket__header}>
@@ -18,7 +17,7 @@ const Ticket = ({ ticket }) => {
       {segments.map((segment) => (
         <DescriptionTicket
           key={descriptionTicketId++}
-          segment={segment}
+          {...segment}
         />
       ))}
     </article>

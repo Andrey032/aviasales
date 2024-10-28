@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
 type CheckBoxState = {
@@ -23,11 +23,11 @@ const updateAllState = (state: CheckBoxState) => {
 };
 
 const checkBoxSlice = createSlice({
-  name: 'checkBox',
+  name: '@@checkBox',
 
   initialState,
   reducers: {
-    allAction: (state, action) => {
+    allAction: (state, action: PayloadAction<boolean>) => {
       Object.keys(state).map((key) => {
         state[key] = action.payload;
       });
