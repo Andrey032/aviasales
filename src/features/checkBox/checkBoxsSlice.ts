@@ -11,11 +11,11 @@ type CheckBoxState = {
 };
 
 const initialState: CheckBoxState = {
-  all: false,
-  noTransfers: false,
-  oneTransfers: false,
-  twoTransfers: false,
-  threeTransfers: false,
+  all: true,
+  noTransfers: true,
+  oneTransfers: true,
+  twoTransfers: true,
+  threeTransfers: true,
 };
 
 const updateAllState = (state: CheckBoxState) => {
@@ -34,6 +34,9 @@ const checkBoxSlice = createSlice({
     },
     noTransfersAction: (state) => {
       state.noTransfers = !state.noTransfers;
+      if (state.all) {
+        state.all = !state.all;
+      }
     },
     oneTransfersAction: (state) => {
       state.oneTransfers = !state.oneTransfers;

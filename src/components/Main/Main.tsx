@@ -1,27 +1,30 @@
 import styleMain from './Main.module.scss';
 import FilterTransfers from '../FilterTransfers/index';
 import TicketSelectionField from '../TicketField/index';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { addSlice } from '../../features/tickets/ticketsSlice';
 import Spiner from '../Spiner/index';
 import Button from '../Button';
 
 const Main: React.FC = () => {
-  const isFetching = useAppSelector((state) => state.tickets.isFetching);
+  const dispatch = useAppDispatch();
+  const isStop = useAppSelector((state) => state.tickets.stop);
+  const isChecked = useAppSelector((state) => state.checkBox);
 
   return (
     <>
-      {isFetching && <Spiner />}
-      {!isFetching && (
-        <section className={styleMain.main}>
-          <FilterTransfers />
-          <TicketSelectionField />
+      {!isStop && <Spiner />}
+      <section className={styleMain.main}>
+        <FilterTransfers />
+        <TicketSelectionField />
+        {Object.keys(isChecked).some((el) => isChecked[el]) && (
           <Button
             text={'ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!'}
             tab={'more'}
-            click={() => console.log('click')}
+            click={() => dispatch(addSlice())}
           />
-        </section>
-      )}
+        )}
+      </section>
     </>
   );
 };

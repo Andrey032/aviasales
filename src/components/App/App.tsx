@@ -4,8 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Logo from '../Logo/index';
 import Main from '../Main/index';
 
-import { getSearchId } from '../../services/fetchServices';
-import { isError, errorMessage, loadAllTickets } from '../../features/tickets/ticketsSlice';
+import {
+  isError,
+  errorMessage,
+  loadAllTickets,
+  stopStatus,
+  loadSearchId,
+  searchIdSelect,
+} from '../../features/tickets/ticketsSlice';
 
 import styleApp from './App.module.scss';
 
@@ -13,21 +19,24 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const errorVisible = useAppSelector(isError);
   const errorMassege = useAppSelector(errorMessage);
+  const stopFetch = useAppSelector(stopStatus);
+  const searchId = useAppSelector(searchIdSelect);
 
   useEffect(() => {
-    const searchId = localStorage.getItem('searchId');
-    if (searchId === null) {
-      getSearchId().then((id) => localStorage.setItem('searchId', id));
-    } else {
-      dispatch(loadAllTickets(searchId));
-    }
+    dispatch(loadSearchId());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (searchId && !stopFetch) {
+      dispatch(loadAllTickets());
+    }
+  }, [dispatch, searchId, stopFetch]);
 
   return (
     <div className={styleApp.app}>
       <Logo />
-      {errorVisible && <h4>{errorMassege}</h4>}
-      {!errorVisible && <Main />}
+      {errorVisible && errorMassege}
+      <Main />
     </div>
   );
 };
