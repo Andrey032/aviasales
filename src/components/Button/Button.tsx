@@ -4,10 +4,11 @@ import classnames from 'classnames';
 interface ButtonProps {
   text: string;
   tab: string;
+  isActive?: boolean;
   click: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, tab, click }) => {
+const Button: React.FC<ButtonProps> = ({ text, tab, isActive, click }) => {
   const {
     button,
     button__leftRadius: leftRadius,
@@ -24,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({ text, tab, click }) => {
 
   return (
     <button
-      className={borderButton}
+      className={isActive ? `${borderButton} ${styleButton.button__active}` : borderButton}
       onClick={click}
     >
       {text}

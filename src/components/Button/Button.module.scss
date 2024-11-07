@@ -25,6 +25,11 @@
     color: #ffffff;
   }
 
+  &__active {
+    background-color: #2196f3;
+    color: variables.$backgroundWindow;
+  }
+
   &:focus {
     background-color: #2196f3;
     color: variables.$backgroundWindow;
