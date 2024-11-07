@@ -1,5 +1,13 @@
+@use '../../styles/variables' as variables;
+
 .ticketField {
   max-width: 504px;
   width: 100%;
   grid-area: ticket;
+
+  &__ticketMessage {
+    color: variables.$highlightedСolor;
+    text-align: center;
+    margin-top: 50px;
+  }
 }

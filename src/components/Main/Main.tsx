@@ -10,6 +10,11 @@ const Main: React.FC = () => {
   const dispatch = useAppDispatch();
   const isStop = useAppSelector((state) => state.tickets.stop);
   const isChecked = useAppSelector((state) => state.checkBox);
+  const isError = useAppSelector((state) => state.tickets.isError);
+
+  const isCheckCheckedBox = () => {
+    return Object.keys(isChecked).some((el) => isChecked[el]);
+  };
 
   return (
     <>
@@ -17,7 +22,7 @@ const Main: React.FC = () => {
       <section className={styleMain.main}>
         <FilterTransfers />
         <TicketSelectionField />
-        {Object.keys(isChecked).some((el) => isChecked[el]) && (
+        {isCheckCheckedBox() && !isError && (
           <Button
             text={'ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!'}
             tab={'more'}

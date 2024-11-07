@@ -1,8 +1,7 @@
 import styleTicket from './Ticket.module.scss';
 import DescriptionTicket from '../DescriptionTicket/index';
 import { OneTicket } from '../../features/tickets/ticketsSlice';
-
-let descriptionTicketId = 1;
+import { v4 as uuidv4 } from 'uuid';
 
 const Ticket: React.FC<OneTicket> = ({ carrier, price, segments }) => {
   return (
@@ -16,7 +15,7 @@ const Ticket: React.FC<OneTicket> = ({ carrier, price, segments }) => {
       </div>
       {segments.map((segment) => (
         <DescriptionTicket
-          key={descriptionTicketId++}
+          key={uuidv4()}
           {...segment}
         />
       ))}

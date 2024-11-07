@@ -12,8 +12,7 @@ import {
   threeTransfersSelected,
   visibleTicketsSelector,
 } from '../../features/tickets/ticketsSlice';
-
-let ticketId = 1;
+import { v4 as uuidv4 } from 'uuid';
 
 const TicketField: React.FC = () => {
   const tab = useAppSelector((state) => state.tab);
@@ -36,10 +35,12 @@ const TicketField: React.FC = () => {
     { condition: threeTransfers, tickets: ticketsThreeTransfers },
   ];
 
+  const selectedGroup = ticketGroups.find((group) => group.condition)?.tickets || [];
+
   const getFirstFiveTickets = (tickets: OneTicket[]) => {
     return tickets.slice(0, visibleTickets).map((ticket) => (
       <Ticket
-        key={ticketId++}
+        key={uuidv4()}
         {...ticket}
       />
     ));
@@ -64,10 +65,19 @@ const TicketField: React.FC = () => {
     }
   };
 
+  const isChekedConditionFalse = () => {
+    return ticketGroups.every((group) => group.condition === false);
+  };
+
   return (
     <div className={styleTicketField.ticketField}>
       <Tabs />
-      {ticketGroups.map((group) => group.condition && sortedTickets(group.tickets, tab))}
+      {isChekedConditionFalse() && (
+        <div className={styleTicketField.ticketField__ticketMessage}>
+          "Рейсов, подходящих под заданные фильтры, не найдено"
+        </div>
+      )}
+      {sortedTickets(selectedGroup, tab)}
     </div>
   );
 };
