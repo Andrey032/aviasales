@@ -1,3 +1,3 @@
 # React + TypeScript + Vite
 
-Ссылка [AviaSales](https://movies-app-eta-ten-84.vercel.app/)
+Ссылка [AviaSales](https://aviasales-rho-khaki.vercel.app/)

@@ -9,7 +9,7 @@
   color: variables.$colorText;
   line-height: variables.$lineHeight-M;
   padding-left: 50px;
-  cursor: url('assets/cursor.svg'), auto;
+  cursor: url(/assets/cursor.svg), auto;
 
   &:hover {
     background-color: variables.$backgroundHoverEffect;
@@ -20,7 +20,7 @@
     position: absolute;
 
     &:checked + .check__box {
-      background: url('/assets/shape.svg') no-repeat 5px 7px;
+      background: url(/assets/shape.svg) no-repeat 5px 7px;
       border-color: variables.$highlightedСolor;
     }
   }
