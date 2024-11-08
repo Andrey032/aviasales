@@ -7,7 +7,7 @@ import {
   twoTransfersAction,
   threeTransfersAction,
   selectCheckBox,
-} from '../../features/checkBox/checkBoxsSlice';
+} from '../../features/tickets/ticketsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const FilterTransfers: React.FC = () => {
@@ -16,15 +16,13 @@ const FilterTransfers: React.FC = () => {
 
   const { all, noTransfers, oneTransfers, twoTransfers, threeTransfers } = checkBoxState;
 
-  const isAllChecked = () => !checkBoxState.all;
-
   return (
     <div className={styleFilter.filter}>
       <h1 className={styleFilter.filter__title}>КОЛИЧЕСТВО ПЕРЕСАДОК</h1>
       <div className={styleFilter.filter__wrapper}>
         <Input
           label='Все'
-          func={() => dispatch(allAction(isAllChecked()))}
+          func={() => dispatch(allAction())}
           state={all}
         />
         <Input

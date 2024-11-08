@@ -36,10 +36,7 @@ const Tabs: React.FC = () => {
         text={OPTIMAL}
         tab='tab3'
         isActive={contentType === OPTIMAL}
-        click={() => {
-          // dispatch(optimal(OPTIMAL));
-          handleClick(OPTIMAL);
-        }}
+        click={() => handleClick(OPTIMAL)}
       />
     </div>
   );

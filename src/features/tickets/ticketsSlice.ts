@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { createSelector } from 'reselect';
 import { URL } from '../../utils/constants';
 
 export type Segments = {
@@ -17,6 +16,15 @@ export type OneTicket = {
   segments: Segments[];
 };
 
+type CheckBoxState = {
+  all: boolean;
+  noTransfers: boolean;
+  oneTransfers: boolean;
+  twoTransfers: boolean;
+  threeTransfers: boolean;
+  [key: string]: boolean;
+};
+
 type TicketState = {
   items: OneTicket[];
   stop: boolean;
@@ -24,6 +32,7 @@ type TicketState = {
   error: string | null;
   searchId: string | null;
   visibleTickets: number;
+  checkBox: CheckBoxState;
 };
 
 const initialState: TicketState = {
@@ -33,6 +42,13 @@ const initialState: TicketState = {
   error: null,
   searchId: null,
   visibleTickets: 5,
+  checkBox: {
+    all: true,
+    noTransfers: true,
+    oneTransfers: true,
+    twoTransfers: true,
+    threeTransfers: true,
+  },
 };
 
 export const loadSearchId = createAsyncThunk(
@@ -75,6 +91,10 @@ export const loadAllTickets = createAsyncThunk<
   }
 });
 
+const updateAllState = (state: CheckBoxState) => {
+  return state.oneTransfers && state.twoTransfers && state.threeTransfers;
+};
+
 const ticketsSlice = createSlice({
   name: '@@tickets',
   initialState,
@@ -92,6 +112,26 @@ const ticketsSlice = createSlice({
           a.segments[1].duration -
           (b.segments[0].duration + b.segments[1].duration)
       );
+    },
+    allAction: (state) => {
+      Object.keys(state.checkBox).map((key) => {
+        state.checkBox[key] = !state.checkBox[key];
+      });
+    },
+    noTransfersAction: (state) => {
+      state.checkBox.noTransfers = !state.checkBox.noTransfers;
+    },
+    oneTransfersAction: (state) => {
+      state.checkBox.oneTransfers = !state.checkBox.oneTransfers;
+      state.checkBox.all = updateAllState({ ...state.checkBox });
+    },
+    twoTransfersAction: (state) => {
+      state.checkBox.twoTransfers = !state.checkBox.twoTransfers;
+      state.checkBox.all = updateAllState({ ...state.checkBox });
+    },
+    threeTransfersAction: (state) => {
+      state.checkBox.threeTransfers = !state.checkBox.threeTransfers;
+      state.checkBox.all = updateAllState({ ...state.checkBox });
     },
   },
   extraReducers: (builder) => {
@@ -128,35 +168,39 @@ export const stopStatus = (state: RootState) => state.tickets.stop;
 export const searchIdSelect = (state: RootState) => state.tickets.searchId;
 export const visibleTicketsSelector = (state: RootState) => state.tickets.visibleTickets;
 
-const helperSelected = (state: RootState, transfer: number) => {
-  return state.tickets.items.filter(
-    (ticket) =>
-      ticket.segments[0].stops.length === transfer && ticket.segments[1].stops.length === transfer
-  );
-};
+export const selectCheckBox = (state: RootState) => state.tickets.checkBox;
 
 export const allSelected = (state: RootState) => state.tickets.items;
 
-export const noTransfersSelected = createSelector(
-  (state: RootState) => state,
-  (state) => helperSelected(state, 0)
-);
+// export const noTransfersSelected = createSelector(
+//   (state: RootState) => state,
+//   (state) => helperSelected(state, 0)
+// );
 
-export const oneTransfersSelected = createSelector(
-  (state: RootState) => state,
-  (state: RootState) => helperSelected(state, 1)
-);
+// export const oneTransfersSelected = createSelector(
+//   (state: RootState) => state,
+//   (state: RootState) => helperSelected(state, 1)
+// );
 
-export const twoTransfersSelected = createSelector(
-  (state: RootState) => state,
-  (state: RootState) => helperSelected(state, 2)
-);
+// export const twoTransfersSelected = createSelector(
+//   (state: RootState) => state,
+//   (state: RootState) => helperSelected(state, 2)
+// );
 
-export const threeTransfersSelected = createSelector(
-  (state: RootState) => state,
-  (state: RootState) => helperSelected(state, 3)
-);
+// export const threeTransfersSelected = createSelector(
+//   (state: RootState) => state,
+//   (state: RootState) => helperSelected(state, 3)
+// );
 
-export const { addSlice, sortByPrice, sortByDuration } = ticketsSlice.actions;
+export const {
+  addSlice,
+  sortByPrice,
+  sortByDuration,
+  allAction,
+  noTransfersAction,
+  oneTransfersAction,
+  twoTransfersAction,
+  threeTransfersAction,
+} = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
