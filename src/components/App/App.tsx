@@ -8,7 +8,6 @@ import {
   isError,
   errorMessage,
   loadAllTickets,
-  stopStatus,
   loadSearchId,
   searchIdSelect,
 } from '../../features/tickets/ticketsSlice';
@@ -19,7 +18,6 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const errorVisible = useAppSelector(isError);
   const errorMassege = useAppSelector(errorMessage);
-  const stopFetch = useAppSelector(stopStatus);
   const searchId = useAppSelector(searchIdSelect);
 
   useEffect(() => {
@@ -27,10 +25,10 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (searchId && !stopFetch) {
+    if (searchId) {
       dispatch(loadAllTickets());
     }
-  }, [dispatch, searchId, stopFetch]);
+  }, [dispatch, searchId]);
 
   return (
     <div className={styleApp.app}>

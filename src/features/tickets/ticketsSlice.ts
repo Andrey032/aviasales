@@ -82,6 +82,17 @@ const ticketsSlice = createSlice({
     addSlice: (state) => {
       state.visibleTickets += 5;
     },
+    sortByPrice: (state) => {
+      state.items.sort((a, b) => a.price - b.price);
+    },
+    sortByDuration: (state) => {
+      state.items.sort(
+        (a, b) =>
+          a.segments[0].duration +
+          a.segments[1].duration -
+          (b.segments[0].duration + b.segments[1].duration)
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -146,6 +157,6 @@ export const threeTransfersSelected = createSelector(
   (state: RootState) => helperSelected(state, 3)
 );
 
-export const { addSlice } = ticketsSlice.actions;
+export const { addSlice, sortByPrice, sortByDuration } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
