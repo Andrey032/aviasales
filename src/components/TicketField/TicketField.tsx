@@ -8,12 +8,12 @@ import {
   OneTicket,
   visibleTicketsSelector,
 } from '../../features/tickets/ticketsSlice';
-import { helperfilter } from '../../utils/helpers';
+import { helperFilter } from '../../utils/helpers';
 
 const TicketField: React.FC = () => {
   const ticketsAll = useAppSelector(allSelected);
   const visibleTickets = useAppSelector(visibleTicketsSelector);
-  const allCheckBox = useAppSelector((state) => state.tickets.checkBox);
+  const allCheckBox = useAppSelector((state) => state.checkBox);
 
   const { all, noTransfers, oneTransfers, twoTransfers, threeTransfers } = allCheckBox;
 
@@ -25,10 +25,10 @@ const TicketField: React.FC = () => {
     () =>
       (tickets: OneTicket[]): OneTicket[] => {
         if (all) return tickets;
-        if (noTransfers) return helperfilter(tickets, 0);
-        if (oneTransfers) return helperfilter(tickets, 1);
-        if (twoTransfers) return helperfilter(tickets, 2);
-        if (threeTransfers) return helperfilter(tickets, 3);
+        if (noTransfers) return helperFilter(tickets, 0);
+        if (oneTransfers) return helperFilter(tickets, 1);
+        if (twoTransfers) return helperFilter(tickets, 2);
+        if (threeTransfers) return helperFilter(tickets, 3);
         return tickets;
       },
     [all, noTransfers, oneTransfers, twoTransfers, threeTransfers]

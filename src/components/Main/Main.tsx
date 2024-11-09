@@ -8,9 +8,9 @@ import Button from '../Button';
 
 const Main: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isStop = useAppSelector((state) => state.tickets.stop);
-  const isChecked = useAppSelector((state) => state.tickets.checkBox);
-  const isError = useAppSelector((state) => state.tickets.isError);
+  const isStop = useAppSelector((state) => state.stop);
+  const isChecked = useAppSelector((state) => state.checkBox);
+  const isError = useAppSelector((state) => state.isError);
 
   const isCheckCheckedBox = () => {
     return Object.keys(isChecked).some((el) => isChecked[el]);

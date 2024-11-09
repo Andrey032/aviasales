@@ -75,7 +75,7 @@ export const loadAllTickets = createAsyncThunk<
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
   try {
-    const { searchId } = (getState() as RootState).tickets;
+    const { searchId } = getState() as RootState;
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
     if (response.status === 500) dispatch(loadAllTickets());
     if (!response.ok) throw new Error(response.statusText);
@@ -162,35 +162,15 @@ const ticketsSlice = createSlice({
   },
 });
 
-export const isError = (state: RootState) => state.tickets.isError;
-export const errorMessage = (state: RootState) => state.tickets.error;
-export const stopStatus = (state: RootState) => state.tickets.stop;
-export const searchIdSelect = (state: RootState) => state.tickets.searchId;
-export const visibleTicketsSelector = (state: RootState) => state.tickets.visibleTickets;
+export const isError = (state: RootState) => state.isError;
+export const errorMessage = (state: RootState) => state.error;
+export const stopStatus = (state: RootState) => state.stop;
+export const searchIdSelect = (state: RootState) => state.searchId;
+export const visibleTicketsSelector = (state: RootState) => state.visibleTickets;
 
-export const selectCheckBox = (state: RootState) => state.tickets.checkBox;
+export const selectCheckBox = (state: RootState) => state.checkBox;
 
-export const allSelected = (state: RootState) => state.tickets.items;
-
-// export const noTransfersSelected = createSelector(
-//   (state: RootState) => state,
-//   (state) => helperSelected(state, 0)
-// );
-
-// export const oneTransfersSelected = createSelector(
-//   (state: RootState) => state,
-//   (state: RootState) => helperSelected(state, 1)
-// );
-
-// export const twoTransfersSelected = createSelector(
-//   (state: RootState) => state,
-//   (state: RootState) => helperSelected(state, 2)
-// );
-
-// export const threeTransfersSelected = createSelector(
-//   (state: RootState) => state,
-//   (state: RootState) => helperSelected(state, 3)
-// );
+export const allSelected = (state: RootState) => state.items;
 
 export const {
   addSlice,

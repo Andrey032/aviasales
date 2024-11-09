@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rootRedusers from './rootRedusers';
+import reducerTickets from './tickets/ticketsSlice';
 
 const store = configureStore({
-  reducer: rootRedusers,
+  reducer: reducerTickets,
   devTools: true,
 });
 
