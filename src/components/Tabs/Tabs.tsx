@@ -3,7 +3,7 @@ import styleTabs from './Tabs.module.scss';
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { CHEAPEST, THE_FASTEST, OPTIMAL } from '../../utils/constants';
-import { sortByDuration, sortByPrice } from '../../features/tickets/ticketsSlice';
+import { addTab, sortByDuration, sortByPrice } from '../../features/tickets/ticketsSlice';
 
 const Tabs: React.FC = () => {
   const [contentType, setContentType] = useState('');
@@ -19,6 +19,7 @@ const Tabs: React.FC = () => {
         tab='tab1'
         isActive={contentType === CHEAPEST}
         click={() => {
+          dispatch(addTab(CHEAPEST));
           dispatch(sortByPrice());
           handleClick(CHEAPEST);
         }}
@@ -28,6 +29,7 @@ const Tabs: React.FC = () => {
         tab='tab2'
         isActive={contentType === THE_FASTEST}
         click={() => {
+          dispatch(addTab(THE_FASTEST));
           dispatch(sortByDuration());
           handleClick(THE_FASTEST);
         }}
@@ -36,7 +38,10 @@ const Tabs: React.FC = () => {
         text={OPTIMAL}
         tab='tab3'
         isActive={contentType === OPTIMAL}
-        click={() => handleClick(OPTIMAL)}
+        click={() => {
+          dispatch(addTab(OPTIMAL));
+          handleClick(OPTIMAL);
+        }}
       />
     </div>
   );

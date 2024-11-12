@@ -26,7 +26,9 @@ const Button: React.FC<ButtonProps> = ({ text, tab, isActive, click }) => {
   return (
     <button
       className={isActive ? `${borderButton} ${styleButton.button__active}` : borderButton}
-      onClick={click}
+      onClick={() => {
+        click();
+      }}
     >
       {text}
     </button>

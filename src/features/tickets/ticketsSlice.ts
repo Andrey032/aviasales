@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { URL } from '../../utils/constants';
+import { URL, CHEAPEST, THE_FASTEST } from '../../utils/constants';
 
 export type Segments = {
   date: Date;
@@ -32,6 +32,7 @@ type TicketState = {
   error: string | null;
   searchId: string | null;
   visibleTickets: number;
+  tab: string;
   checkBox: CheckBoxState;
 };
 
@@ -42,6 +43,7 @@ const initialState: TicketState = {
   error: null,
   searchId: null,
   visibleTickets: 5,
+  tab: '',
   checkBox: {
     all: true,
     noTransfers: true,
@@ -75,12 +77,17 @@ export const loadAllTickets = createAsyncThunk<
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
   try {
-    const { searchId } = getState() as RootState;
+    const { searchId, tab } = getState() as RootState;
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
     if (response.status === 500) dispatch(loadAllTickets());
     if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
     if (!data.stop) dispatch(loadAllTickets());
+    if (tab === CHEAPEST) {
+      dispatch(sortByPrice());
+    } else if (tab === THE_FASTEST) {
+      dispatch(sortByDuration());
+    }
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -113,12 +120,26 @@ const ticketsSlice = createSlice({
           (b.segments[0].duration + b.segments[1].duration)
       );
     },
+    addTab: (state, action) => {
+      state.tab = action.payload;
+    },
     allAction: (state) => {
-      Object.keys(state.checkBox).map((key) => {
-        state.checkBox[key] = !state.checkBox[key];
-      });
+      if (state.checkBox.all) {
+        state.checkBox.all = false;
+        state.checkBox.noTransfers = false;
+        state.checkBox.oneTransfers = false;
+        state.checkBox.twoTransfers = false;
+        state.checkBox.threeTransfers = false;
+      } else {
+        state.checkBox.all = true;
+        state.checkBox.noTransfers = true;
+        state.checkBox.oneTransfers = true;
+        state.checkBox.twoTransfers = true;
+        state.checkBox.threeTransfers = true;
+      }
     },
     noTransfersAction: (state) => {
+      state.checkBox.all = false;
       state.checkBox.noTransfers = !state.checkBox.noTransfers;
     },
     oneTransfersAction: (state) => {
@@ -140,6 +161,8 @@ const ticketsSlice = createSlice({
         state.searchId = action.payload;
       })
       .addCase(loadAllTickets.fulfilled, (state, action) => {
+        console.log(action);
+
         state.isError = false;
         state.error = null;
         state.items = [...state.items, ...action.payload.tickets];
@@ -176,6 +199,7 @@ export const {
   addSlice,
   sortByPrice,
   sortByDuration,
+  addTab,
   allAction,
   noTransfersAction,
   oneTransfersAction,
