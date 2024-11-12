@@ -161,8 +161,6 @@ const ticketsSlice = createSlice({
         state.searchId = action.payload;
       })
       .addCase(loadAllTickets.fulfilled, (state, action) => {
-        console.log(action);
-
         state.isError = false;
         state.error = null;
         state.items = [...state.items, ...action.payload.tickets];
