@@ -60,14 +60,14 @@ export const loadSearchId = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(`${URL}search`);
-      if (!response.ok) throw new Error(response.statusText);
-      const searchId = await response.json();
-      return searchId.searchId;
+      if (!response.ok) throw new Error(`${response.status}`);
+      const { searchId } = await response.json();
+      return searchId;
     } catch (error) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(`Ключ не найден ${error.message}`);
       } else {
-        return rejectWithValue('Failed to load searchId');
+        return rejectWithValue('Ключ не найден');
       }
     }
   }
@@ -96,9 +96,9 @@ export const loadAllTickets = createAsyncThunk<
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(`Ошибка в получении билетов ${error.message}`);
     } else {
-      return rejectWithValue('Failed to load tickets');
+      return rejectWithValue('Ошибка в получении билетов');
     }
   } finally {
     dispatch(setFetching(false));
@@ -196,6 +196,8 @@ const ticketsSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
         (state, action: PayloadAction<string>) => {
+          console.log(action.payload);
+
           state.isError = true;
           state.error = action.payload;
         }
@@ -203,12 +205,11 @@ const ticketsSlice = createSlice({
   },
 });
 
-export const isError = (state: RootState) => state.isError;
-export const errorMessage = (state: RootState) => state.error;
-export const stopStatus = (state: RootState) => state.stop;
+export const isErrorSelect = (state: RootState) => state.isError;
+export const errorMessageSelect = (state: RootState) => state.error;
+export const stopStatusSelect = (state: RootState) => state.stop;
 export const searchIdSelect = (state: RootState) => state.searchId;
 export const visibleTicketsSelector = (state: RootState) => state.visibleTickets;
-
 export const selectCheckBox = (state: RootState) => state.checkBox;
 
 export const allSelected = (state: RootState) => state.items;

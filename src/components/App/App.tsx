@@ -5,19 +5,18 @@ import Logo from '../Logo/index';
 import Main from '../Main/index';
 
 import {
-  isError,
-  errorMessage,
+  isErrorSelect,
   loadAllTickets,
   loadSearchId,
   searchIdSelect,
 } from '../../features/tickets/ticketsSlice';
 
 import styleApp from './App.module.scss';
+import Error from '../Error/Error';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const errorVisible = useAppSelector(isError);
-  const errorMassege = useAppSelector(errorMessage);
+  const isError = useAppSelector(isErrorSelect);
   const searchId = useAppSelector(searchIdSelect);
 
   useEffect(() => {
@@ -33,8 +32,8 @@ const App: React.FC = () => {
   return (
     <div className={styleApp.app}>
       <Logo />
-      {errorVisible && errorMassege}
-      <Main />
+      {isError && <Error />}
+      {!isError && <Main />}
     </div>
   );
 };

@@ -1,0 +1,5 @@
+@use '../../styles/variables' as variables;
+
+.error {
+  color: variables.$highlightedСolor;
+}

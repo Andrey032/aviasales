@@ -24,14 +24,15 @@ const TicketField: React.FC = () => {
 
   const filterTicketsByCheckboxes = useMemo(
     () =>
-      (tickets: OneTicket[]): OneTicket[] => {
-        if (all) return tickets;
-        if (noTransfers) return helperFilter(tickets, 0);
-        if (oneTransfers) return helperFilter(tickets, 1);
-        if (twoTransfers) return helperFilter(tickets, 2);
-        if (threeTransfers) return helperFilter(tickets, 3);
-        return tickets;
-      },
+      (tickets: OneTicket[]): OneTicket[] =>
+        tickets.filter((ticket) => {
+          if (all) return ticket;
+          if (noTransfers && helperFilter(tickets, 0)) return true;
+          if (oneTransfers && helperFilter(tickets, 1)) return true;
+          if (twoTransfers && helperFilter(tickets, 2)) return true;
+          if (threeTransfers && helperFilter(tickets, 3)) return true;
+          return false;
+        }),
     [all, noTransfers, oneTransfers, twoTransfers, threeTransfers]
   );
 

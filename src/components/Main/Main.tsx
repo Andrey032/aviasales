@@ -2,15 +2,20 @@ import styleMain from './Main.module.scss';
 import FilterTransfers from '../FilterTransfers/index';
 import TicketSelectionField from '../TicketField/index';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
-import { addSlice } from '../../features/tickets/ticketsSlice';
+import {
+  addSlice,
+  isErrorSelect,
+  selectCheckBox,
+  stopStatusSelect,
+} from '../../features/tickets/ticketsSlice';
 import Spiner from '../Spiner/index';
 import Button from '../Button';
 
 const Main: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isStop = useAppSelector((state) => state.stop);
-  const isChecked = useAppSelector((state) => state.checkBox);
-  const isError = useAppSelector((state) => state.isError);
+  const isStop = useAppSelector(stopStatusSelect);
+  const isChecked = useAppSelector(selectCheckBox);
+  const isError = useAppSelector(isErrorSelect);
 
   const isCheckCheckedBox = () => {
     return Object.keys(isChecked).some((el) => isChecked[el]);
