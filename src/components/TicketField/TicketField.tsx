@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import {
   allSelected,
   OneTicket,
+  selectCheckBox,
   visibleTicketsSelector,
 } from '../../features/tickets/ticketsSlice';
 import { helperFilter } from '../../utils/helpers';
@@ -13,7 +14,7 @@ import { helperFilter } from '../../utils/helpers';
 const TicketField: React.FC = () => {
   const ticketsAll = useAppSelector(allSelected);
   const visibleTickets = useAppSelector(visibleTicketsSelector);
-  const allCheckBox = useAppSelector((state) => state.checkBox);
+  const allCheckBox = useAppSelector(selectCheckBox);
 
   const { all, noTransfers, oneTransfers, twoTransfers, threeTransfers } = allCheckBox;
 
@@ -45,9 +46,9 @@ const TicketField: React.FC = () => {
       {!isChekedConditionFalse() &&
         filterTicketsByCheckboxes(ticketsAll)
           .slice(0, visibleTickets)
-          .map((ticket: OneTicket, index: number) => (
+          .map((ticket: OneTicket) => (
             <Ticket
-              key={`${ticket.price}${index}`}
+              key={`${ticket.price}${ticket.carrier}`}
               {...ticket}
             />
           ))}

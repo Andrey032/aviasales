@@ -31,6 +31,7 @@ type TicketState = {
   isError: boolean;
   error: string | null;
   searchId: string | null;
+  isLoading: boolean;
   visibleTickets: number;
   tab: string;
   checkBox: CheckBoxState;
@@ -42,6 +43,7 @@ const initialState: TicketState = {
   isError: false,
   error: null,
   searchId: null,
+  isLoading: false,
   visibleTickets: 5,
   tab: '',
   checkBox: {
@@ -76,13 +78,16 @@ export const loadAllTickets = createAsyncThunk<
   undefined,
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
+  const { searchId, tab, isLoading, stop } = getState() as RootState;
+  if (!isLoading && stop) {
+    return rejectWithValue('Already fetching tickets');
+  }
   try {
-    const { searchId, tab } = getState() as RootState;
+    dispatch(setFetching(true));
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
-    if (response.status === 500) dispatch(loadAllTickets());
-    if (!response.ok) throw new Error(response.statusText);
+    if (!response.ok) dispatch(loadAllTickets());
     const data = await response.json();
-    if (!data.stop) dispatch(loadAllTickets());
+    if (!data.stop && !isLoading) dispatch(loadAllTickets());
     if (tab === CHEAPEST) {
       dispatch(sortByPrice());
     } else if (tab === THE_FASTEST) {
@@ -95,6 +100,8 @@ export const loadAllTickets = createAsyncThunk<
     } else {
       return rejectWithValue('Failed to load tickets');
     }
+  } finally {
+    dispatch(setFetching(false));
   }
 });
 
@@ -123,6 +130,9 @@ const ticketsSlice = createSlice({
     addTab: (state, action) => {
       state.tab = action.payload;
     },
+    setFetching: (state, action) => {
+      state.isLoading = action.payload;
+    },
     allAction: (state) => {
       if (state.checkBox.all) {
         state.checkBox.all = false;
@@ -139,20 +149,30 @@ const ticketsSlice = createSlice({
       }
     },
     noTransfersAction: (state) => {
-      state.checkBox.all = false;
       state.checkBox.noTransfers = !state.checkBox.noTransfers;
+      if (
+        state.checkBox.noTransfers &&
+        state.checkBox.oneTransfers &&
+        state.checkBox.twoTransfers &&
+        state.checkBox.threeTransfers
+      )
+        state.checkBox.all = true;
+      if (!state.checkBox.noTransfers) state.checkBox.all = false;
     },
     oneTransfersAction: (state) => {
       state.checkBox.oneTransfers = !state.checkBox.oneTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
+      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
     twoTransfersAction: (state) => {
       state.checkBox.twoTransfers = !state.checkBox.twoTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
+      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
     threeTransfersAction: (state) => {
       state.checkBox.threeTransfers = !state.checkBox.threeTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
+      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
   },
   extraReducers: (builder) => {
@@ -161,8 +181,6 @@ const ticketsSlice = createSlice({
         state.searchId = action.payload;
       })
       .addCase(loadAllTickets.fulfilled, (state, action) => {
-        console.log(action);
-
         state.isError = false;
         state.error = null;
         state.items = [...state.items, ...action.payload.tickets];
@@ -205,6 +223,7 @@ export const {
   oneTransfersAction,
   twoTransfersAction,
   threeTransfersAction,
+  setFetching,
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
