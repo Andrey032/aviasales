@@ -62,7 +62,6 @@ export const loadSearchId = createAsyncThunk(
       const response = await fetch(`${URL}search`);
       if (!response.ok) throw new Error(`${response.status}`);
       const { searchId } = await response.json();
-      console.log(searchId);
 
       return searchId;
     } catch (error) {
