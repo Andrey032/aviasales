@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction, current } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import { CHEAPEST, THE_FASTEST, URL } from '../../utils/constants';
 
@@ -86,7 +86,7 @@ export const loadAllTickets = createAsyncThunk<
     if (!response.ok) dispatch(loadAllTickets());
 
     const data = await response.json();
-    if (!data.stop && !isLoading) dispatch(loadAllTickets());
+    if (!stop && !isLoading) dispatch(loadAllTickets());
 
     return data;
   } catch (error) {
@@ -110,10 +110,12 @@ const ticketsSlice = createSlice({
       state.visibleTickets += 5;
     },
     sortByPrice: (state) => {
-      state.items.sort((a, b) => a.price - b.price);
+      const filterTickets = current(state.items).slice();
+      state.items = filterTickets.sort((a, b) => a.price - b.price);
     },
     sortByDuration: (state) => {
-      state.items.sort(
+      const filterTickets = current(state.items).slice();
+      state.items = filterTickets.sort(
         (a, b) =>
           a.segments[0].duration +
           a.segments[1].duration -
@@ -188,6 +190,8 @@ const ticketsSlice = createSlice({
 
         state.items = newItems;
         state.stop = action.payload.stop;
+        state.isError = false;
+        state.error = null;
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),
