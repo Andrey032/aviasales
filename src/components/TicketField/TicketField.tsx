@@ -27,10 +27,10 @@ const TicketField: React.FC = () => {
       (tickets: OneTicket[]): OneTicket[] =>
         tickets.filter((ticket) => {
           if (all) return ticket;
-          if (noTransfers && helperFilter(tickets, 0)) return true;
-          if (oneTransfers && helperFilter(tickets, 1)) return true;
-          if (twoTransfers && helperFilter(tickets, 2)) return true;
-          if (threeTransfers && helperFilter(tickets, 3)) return true;
+          if (noTransfers && helperFilter(ticket, 0)) return true;
+          if (oneTransfers && helperFilter(ticket, 1)) return true;
+          if (twoTransfers && helperFilter(ticket, 2)) return true;
+          if (threeTransfers && helperFilter(ticket, 3)) return true;
           return false;
         }),
     [all, noTransfers, oneTransfers, twoTransfers, threeTransfers]
