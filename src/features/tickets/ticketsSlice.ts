@@ -76,17 +76,22 @@ export const loadAllTickets = createAsyncThunk<
   undefined,
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
-  const { searchId, isLoading, stop } = getState() as RootState;
-  if (!isLoading && stop) {
-    return rejectWithValue('Already fetching tickets');
+  const { searchId, stop } = getState() as RootState;
+
+  if (!searchId || stop) {
+    return rejectWithValue('Search ID отсутствует или загрузка уже завершена.');
   }
+
   try {
     dispatch(setFetching(true));
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
     if (!response.ok) dispatch(loadAllTickets());
 
     const data = await response.json();
-    if (!stop && !isLoading) dispatch(loadAllTickets());
+
+    if (!data.stop) {
+      dispatch(loadAllTickets());
+    }
 
     return data;
   } catch (error) {
@@ -97,38 +102,6 @@ export const loadAllTickets = createAsyncThunk<
     dispatch(setFetching(false));
   }
 });
-
-// export const loadAllTickets = createAsyncThunk<
-//   { tickets: OneTicket[]; stop: boolean },
-//   undefined,
-//   { rejectValue: string }
-// >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
-//   const { searchId, stop } = getState() as RootState;
-
-//   if (!searchId || stop) {
-//     return rejectWithValue('Search ID отсутствует или загрузка уже завершена.');
-//   }
-
-//   try {
-//     dispatch(setFetching(true));
-//     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
-//     if (!response.ok) dispatch(loadAllTickets());
-
-//     const data = await response.json();
-
-//     if (!data.stop) {
-//       dispatch(loadAllTickets());
-//     }
-
-//     return data;
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       return rejectWithValue(error.message);
-//     }
-//   } finally {
-//     dispatch(setFetching(false));
-//   }
-// });
 
 const updateAllState = (state: CheckBoxState) => {
   return state.oneTransfers && state.twoTransfers && state.threeTransfers;
