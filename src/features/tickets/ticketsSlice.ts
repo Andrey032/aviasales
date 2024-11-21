@@ -112,7 +112,7 @@ export const loadAllTickets = createAsyncThunk<
   try {
     dispatch(setFetching(true));
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
-    if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
+    if (!response.ok) dispatch(loadAllTickets());
 
     const data = await response.json();
 
