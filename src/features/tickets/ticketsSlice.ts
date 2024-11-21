@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { URL, CHEAPEST, THE_FASTEST } from '../../utils/constants';
+import { CHEAPEST, THE_FASTEST, URL } from '../../utils/constants';
 
 export type Segments = {
   date: Date;
@@ -66,8 +66,6 @@ export const loadSearchId = createAsyncThunk(
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(`Ключ не найден ${error.message}`);
-      } else {
-        return rejectWithValue('Ключ не найден');
       }
     }
   }
@@ -78,7 +76,7 @@ export const loadAllTickets = createAsyncThunk<
   undefined,
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
-  const { searchId, tab, isLoading, stop } = getState() as RootState;
+  const { searchId, isLoading, stop } = getState() as RootState;
   if (!isLoading && stop) {
     return rejectWithValue('Already fetching tickets');
   }
@@ -88,17 +86,10 @@ export const loadAllTickets = createAsyncThunk<
     if (!response.ok) dispatch(loadAllTickets());
     const data = await response.json();
     if (!data.stop && !isLoading) dispatch(loadAllTickets());
-    if (tab === CHEAPEST) {
-      dispatch(sortByPrice());
-    } else if (tab === THE_FASTEST) {
-      dispatch(sortByDuration());
-    }
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      return rejectWithValue(`Ошибка в получении билетов ${error.message}`);
-    } else {
-      return rejectWithValue('Ошибка в получении билетов');
+      return rejectWithValue(error.message);
     }
   } finally {
     dispatch(setFetching(false));
@@ -181,9 +172,19 @@ const ticketsSlice = createSlice({
         state.searchId = action.payload;
       })
       .addCase(loadAllTickets.fulfilled, (state, action) => {
-        state.isError = false;
-        state.error = null;
-        state.items = [...state.items, ...action.payload.tickets];
+        const newItems = [...state.items, ...action.payload.tickets];
+        if (state.tab === CHEAPEST) {
+          newItems.sort((a, b) => a.price - b.price);
+        } else if (state.tab === THE_FASTEST) {
+          newItems.sort(
+            (a, b) =>
+              a.segments[0].duration +
+              a.segments[1].duration -
+              (b.segments[0].duration + b.segments[1].duration)
+          );
+        }
+
+        state.items = newItems;
         state.stop = action.payload.stop;
       })
       .addMatcher(
@@ -196,8 +197,6 @@ const ticketsSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
         (state, action: PayloadAction<string>) => {
-          console.log(action.payload);
-
           state.isError = true;
           state.error = action.payload;
         }
@@ -211,7 +210,6 @@ export const stopStatusSelect = (state: RootState) => state.stop;
 export const searchIdSelect = (state: RootState) => state.searchId;
 export const visibleTicketsSelector = (state: RootState) => state.visibleTickets;
 export const selectCheckBox = (state: RootState) => state.checkBox;
-
 export const allSelected = (state: RootState) => state.items;
 
 export const {

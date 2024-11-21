@@ -4,19 +4,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import Logo from '../Logo/index';
 import Main from '../Main/index';
 
-import {
-  isErrorSelect,
-  loadAllTickets,
-  loadSearchId,
-  searchIdSelect,
-} from '../../features/tickets/ticketsSlice';
+import { loadAllTickets, loadSearchId, searchIdSelect } from '../../features/tickets/ticketsSlice';
 
 import styleApp from './App.module.scss';
-import Error from '../Error/Error';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isError = useAppSelector(isErrorSelect);
   const searchId = useAppSelector(searchIdSelect);
 
   useEffect(() => {
@@ -32,8 +25,7 @@ const App: React.FC = () => {
   return (
     <div className={styleApp.app}>
       <Logo />
-      {isError && <Error />}
-      {!isError && <Main />}
+      <Main />
     </div>
   );
 };
