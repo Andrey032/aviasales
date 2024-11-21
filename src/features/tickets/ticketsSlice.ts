@@ -62,6 +62,8 @@ export const loadSearchId = createAsyncThunk(
       const response = await fetch(`${URL}search`);
       if (!response.ok) throw new Error(`${response.status}`);
       const { searchId } = await response.json();
+      console.log(searchId);
+
       return searchId;
     } catch (error) {
       if (error instanceof Error) {
@@ -178,6 +180,7 @@ const ticketsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loadSearchId.fulfilled, (state, action) => {
+        if (state.searchId) return;
         state.searchId = action.payload;
       })
       .addCase(loadAllTickets.fulfilled, (state, action) => {
