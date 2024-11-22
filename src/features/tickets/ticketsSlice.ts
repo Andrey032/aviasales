@@ -86,7 +86,10 @@ export const loadAllTickets = createAsyncThunk<
   try {
     dispatch(setFetching(true));
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
-    if (!response.ok) dispatch(loadAllTickets());
+    if (!response.ok) {
+      dispatch(loadAllTickets());
+      throw new Error(`${response.status}`);
+    }
 
     const data = await response.json();
 
@@ -197,8 +200,6 @@ const ticketsSlice = createSlice({
 
         state.items = newItems;
         state.stop = action.payload.stop;
-        state.isError = false;
-        state.error = null;
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),
@@ -210,6 +211,7 @@ const ticketsSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
         (state, action: PayloadAction<string>) => {
+          if (action.payload === '500') return;
           state.isError = true;
           state.error = action.payload;
         }
