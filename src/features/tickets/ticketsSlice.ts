@@ -78,22 +78,17 @@ export const loadAllTickets = createAsyncThunk<
   { rejectValue: string }
 >('@@tickets/loadAllTickets', async (_, { getState, rejectWithValue, dispatch }) => {
   const { searchId, stop } = getState() as RootState;
-
-  if (!searchId || stop) {
-    return rejectWithValue('Search ID отсутствует или загрузка уже завершена.');
-  }
-
   try {
     dispatch(setFetching(true));
     const response = await fetch(`${URL}tickets?searchId=${searchId}`);
-    if (!response.ok) {
+    if (!response.ok && response.status === 500) {
       dispatch(loadAllTickets());
       throw new Error(`${response.status}`);
     }
 
     const data = await response.json();
 
-    if (!data.stop) {
+    if (!stop) {
       dispatch(loadAllTickets());
     }
 
@@ -166,17 +161,14 @@ const ticketsSlice = createSlice({
     oneTransfersAction: (state) => {
       state.checkBox.oneTransfers = !state.checkBox.oneTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
-      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
     twoTransfersAction: (state) => {
       state.checkBox.twoTransfers = !state.checkBox.twoTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
-      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
     threeTransfersAction: (state) => {
       state.checkBox.threeTransfers = !state.checkBox.threeTransfers;
       state.checkBox.all = updateAllState({ ...state.checkBox });
-      state.checkBox.noTransfers = updateAllState({ ...state.checkBox });
     },
   },
   extraReducers: (builder) => {
@@ -211,9 +203,12 @@ const ticketsSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith('/rejected'),
         (state, action: PayloadAction<string>) => {
-          if (action.payload === '500') return;
-          state.isError = true;
-          state.error = action.payload;
+          if (action.payload === '500') {
+            return;
+          } else {
+            state.isError = true;
+            state.error = action.payload;
+          }
         }
       );
   },
