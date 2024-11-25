@@ -85,6 +85,9 @@ export const loadAllTickets = createAsyncThunk<
       dispatch(loadAllTickets());
       throw new Error(`${response.status}`);
     }
+    if (response.status >= 400 && response.status < 500) {
+      throw new Error(`Упс! Что-то пошло не так, этой страницы не существует ${response.status}`);
+    }
 
     const data = await response.json();
 
