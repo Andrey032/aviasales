@@ -28,7 +28,6 @@ const App: React.FC = () => {
       dispatch(loadAllTickets());
     }
   }, [dispatch, searchId]);
-  console.log(searchId);
 
   return (
     <div className={styleApp.app}>
